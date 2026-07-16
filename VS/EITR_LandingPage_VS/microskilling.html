@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Microskilling – Elephant In The Room</title>
+	<script>
+		(() => {
+			const param = new URLSearchParams(window.location.search).get("scoutTheme");
+			const theme = param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+			document.documentElement.setAttribute("data-theme", theme);
+		})();
+	</script>
+	<link rel="stylesheet" href="styles.css" />
+	<style>
+		/* ── Active nav indicator ── */
+		.nav-links a[aria-current="page"] {
+			color: color-mix(in srgb, var(--cp-warning) 90%, var(--cp-text) 10%);
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+
+/* nav colors handled by styles.css */
+
+		/* ── Home pill ── */
+		.home-link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 0.55rem;
+			height: 28px;
+			border-radius: 6px;
+			border: 1px solid rgba(255,255,255,0.22);
+			background: rgba(255,255,255,0.08);
+			color: rgba(242,247,251,0.82);
+			font-size: 0.62rem;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			text-decoration: none;
+			transition: background 150ms;
+		}
+		.home-link:hover { background: rgba(255,255,255,0.16); }
+
+		/* ── CTA button ── */
+		.cta-btn {
+			display: inline-block;
+			padding: 0.7rem 1.6rem;
+			background: var(--cp-accent);
+			color: #fff;
+			border-radius: 8px;
+			font-size: 0.95rem;
+			font-weight: 600;
+			text-decoration: none;
+			transition: background 180ms;
+		}
+		.cta-btn:hover { background: var(--cp-accent-hover); }
+
+		/* ── Page hero ── */
+		.page-hero {
+			background: linear-gradient(165deg, var(--cp-ocean-soft) 0%, var(--cp-ocean-mid) 55%, var(--cp-ocean-deep) 100%);
+			padding: 6rem 2.4rem 3.8rem;
+			text-align: center;
+		}
+		.hero-kicker {
+			font-size: 0.82rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: color-mix(in srgb, var(--cp-warning) 78%, transparent 22%);
+			margin: 0 0 0.65rem;
+		}
+		.page-heading {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(3rem, 8vw, 5.8rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 1rem;
+			line-height: 0.92;
+		}
+		.hero-subline {
+			font-size: 1.25rem;
+			font-style: italic;
+			color: var(--cp-ocean-text);
+			margin: 0;
+			opacity: 0.88;
+		}
+
+		/* ── Philosophy section ── */
+		.ocean-section {
+			background: linear-gradient(180deg, var(--cp-ocean-deep) 0%, var(--cp-ocean-mid) 100%);
+			padding: 3.2rem 2.4rem 3.6rem;
+		}
+		.ocean-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(1.8rem, 4vw, 2.8rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 1.4rem;
+		}
+		.ocean-section p {
+			color: color-mix(in srgb, var(--cp-ocean-text) 88%, transparent 12%);
+			font-size: 1.05rem;
+			line-height: 1.72;
+			margin: 0 0 1.1rem;
+			max-width: 72ch;
+		}
+		.ocean-section p:last-child { margin-bottom: 0; }
+
+		/* ── How It Works (3 steps) ── */
+		.steps-section {
+			background: linear-gradient(180deg, var(--cp-ocean-mid) 0%, var(--cp-ocean-deep) 100%);
+			padding: 3.2rem 2.4rem 3.8rem;
+		}
+		.steps-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(1.8rem, 4vw, 2.8rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 2rem;
+		}
+		.steps-flow {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.4rem;
+			position: relative;
+		}
+		/* connector line between steps */
+		.steps-flow::before {
+			content: "";
+			position: absolute;
+			top: 2.1rem;
+			left: calc(16.66% + 0.7rem);
+			right: calc(16.66% + 0.7rem);
+			height: 2px;
+			background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, color-mix(in srgb, var(--cp-warning) 40%, transparent 60%) 50%, rgba(255,255,255,0.1) 100%);
+			pointer-events: none;
+		}
+		.step {
+			background: rgba(255,255,255,0.07);
+			border: 1px solid rgba(255,255,255,0.14);
+			border-radius: 14px;
+			padding: 1.8rem 1.5rem 1.6rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.6rem;
+			align-items: flex-start;
+			position: relative;
+		}
+		.step-number {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 42px;
+			height: 42px;
+			border-radius: 50%;
+			background: color-mix(in srgb, var(--cp-warning) 18%, rgba(0,0,0,0.4) 82%);
+			border: 2px solid color-mix(in srgb, var(--cp-warning) 50%, transparent 50%);
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: 1.25rem;
+			color: color-mix(in srgb, var(--cp-warning) 90%, white 10%);
+			line-height: 1;
+			margin-bottom: 0.3rem;
+		}
+		.step-title {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: 1.4rem;
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			margin: 0;
+			line-height: 1.1;
+		}
+		.step-desc {
+			font-size: 0.92rem;
+			color: color-mix(in srgb, var(--cp-ocean-text) 78%, transparent 22%);
+			line-height: 1.55;
+			margin: 0;
+		}
+
+		/* ── Quote callout ── */
+		.quote-section {
+			background: color-mix(in srgb, var(--cp-ocean-deep) 94%, var(--cp-warning) 6%);
+			padding: 3.4rem 2.4rem;
+			text-align: center;
+			border-top: 1px solid rgba(255,255,255,0.07);
+			border-bottom: 1px solid rgba(255,255,255,0.07);
+		}
+		.big-quote {
+			font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+			font-style: italic;
+			color: var(--cp-ocean-text);
+			line-height: 1.65;
+			max-width: 60ch;
+			margin: 0 auto 1rem;
+			position: relative;
+			padding: 0 1.4rem;
+		}
+		.big-quote::before,
+		.big-quote::after {
+			font-family: Georgia, serif;
+			font-size: 4rem;
+			line-height: 0.6;
+			color: color-mix(in srgb, var(--cp-warning) 35%, transparent 65%);
+			position: absolute;
+		}
+		.big-quote::before { content: "\201C"; left: -0.2rem; top: 0.5rem; }
+		.big-quote::after  { content: "\201D"; right: -0.2rem; bottom: -0.3rem; }
+		.quote-source {
+			font-size: 0.8rem;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+			color: color-mix(in srgb, var(--cp-warning) 60%, transparent 40%);
+			margin: 0;
+		}
+
+		/* ── Role Cards ── */
+		.roles-section {
+			background: linear-gradient(180deg, var(--cp-bg-elevated) 0%, var(--cp-bg) 100%);
+			padding: 3rem 2.4rem 3.4rem;
+		}
+		.roles-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(1.8rem, 4vw, 2.6rem);
+			color: var(--cp-text);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 0.6rem;
+		}
+		.roles-section > p {
+			color: var(--cp-text-muted);
+			font-size: 0.97rem;
+			margin: 0 0 1.6rem;
+		}
+		.roles-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 1rem;
+		}
+		.role-card {
+			background: var(--cp-surface);
+			border: 1px solid var(--cp-border);
+			border-radius: 12px;
+			padding: 1.3rem 1.2rem 1.2rem;
+			text-decoration: none;
+			display: flex;
+			flex-direction: column;
+			gap: 0.45rem;
+			transition: box-shadow 180ms, transform 180ms, border-color 180ms;
+		}
+		.role-card:hover {
+			box-shadow: var(--cp-shadow);
+			transform: translateY(-2px);
+			border-color: color-mix(in srgb, var(--cp-accent) 40%, var(--cp-border) 60%);
+		}
+		.role-avatar-row {
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+		}
+		.role-mini-avatar {
+			width: 38px;
+			height: 38px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 2px solid var(--cp-border);
+			flex-shrink: 0;
+		}
+		.role-card-name {
+			font-size: 1rem;
+			font-weight: 700;
+			color: var(--cp-text);
+			margin: 0;
+		}
+		.role-card-role {
+			font-size: 0.76rem;
+			color: var(--cp-text-muted);
+			margin: 0;
+		}
+		.role-card-cta {
+			font-size: 0.76rem;
+			font-weight: 600;
+			color: var(--cp-accent);
+			margin-top: 0.2rem;
+			letter-spacing: 0.04em;
+		}
+
+		/* ── Final CTA ── */
+		.cta-section {
+			background: linear-gradient(170deg, var(--cp-ocean-mid) 0%, var(--cp-ocean-deep) 100%);
+			padding: 3.4rem 2.4rem 3.8rem;
+			text-align: center;
+		}
+		.cta-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(2rem, 5vw, 3.2rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 0.9rem;
+		}
+		.cta-section p {
+			color: color-mix(in srgb, var(--cp-ocean-text) 80%, transparent 20%);
+			font-size: 1.05rem;
+			margin: 0 auto 2rem;
+			max-width: 50ch;
+			line-height: 1.6;
+		}
+
+		@media (max-width: 760px) {
+			.steps-flow {
+				grid-template-columns: 1fr;
+			}
+			.steps-flow::before { display: none; }
+			.page-hero { padding: 5rem 1.2rem 2.4rem; }
+			.ocean-section,
+			.steps-section,
+			.quote-section,
+			.roles-section,
+			.cta-section { padding: 2.4rem 1.2rem 2.8rem; }
+		}
+	</style>
+</head>
+<body>
+	<main class="page-shell">
+		<header class="top-nav">
+			<div class="menu-left">
+				<a href="index.html" class="home-link" aria-label="Home – Elephant In The Room">Home</a>
+				<button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" onclick="var n=document.getElementById('main-nav');var open=n.classList.toggle('open');this.setAttribute('aria-expanded',open);"><span></span><span></span><span></span></button>
+			</div>
+			<nav class="nav-links" id="main-nav" aria-label="Main navigation">
+				<a href="all-episodes.html">All Episodes</a>
+				<a href="who-is-the-elephant.html">Who Is the Elephant</a>
+				<a href="meet-the-characters.html">Meet the Characters</a>
+				<a href="learn-more.html">Learn More</a>
+				<a href="microskilling.html" aria-current="page">Microskilling</a>
+			</nav>
+			<div class="menu-right">
+				<button class="arrow-btn" type="button" aria-label="Previous" onclick="location.href='learn-more.html'">&lt;</button>
+				<button class="arrow-btn" type="button" aria-label="Next" onclick="location.href='index.html'">&gt;</button>
+			</div>
+		</header>
+
+		<!-- Hero -->
+		<section class="page-hero">
+			<p class="hero-kicker">Small skills. Real results.</p>
+			<h1 class="page-heading">Microskilling</h1>
+			<p class="hero-subline">You don't need a certification. You need the next right move.</p>
+		</section>
+
+		<!-- Philosophy -->
+		<section class="ocean-section">
+			<h2>The Philosophy Behind the Navigator</h2>
+			<p>Microskilling is the practice of acquiring a small, specific, immediately applicable skill — rather than completing a lengthy course before you can act. In the age of AI, where tools evolve faster than curricula, microskilling is how professionals stay current without falling behind on the work that matters today.</p>
+			<p>Every skill in the AI Skills Navigator is designed to be used within 24 hours. Not someday. Not after the next training cycle. Today. Each module asks one question: <em>what is the smallest thing you could learn right now that would make tomorrow's work measurably easier?</em> That question is the entire philosophy.</p>
+		</section>
+
+		<!-- How It Works -->
+		<section class="steps-section">
+			<h2>How It Works</h2>
+			<div class="steps-flow">
+
+				<div class="step">
+					<span class="step-number">1</span>
+					<h3 class="step-title">Pick Your Role</h3>
+					<p class="step-desc">Start with who you are at work, not what AI can theoretically do. The Navigator is built around roles — IT Manager, Business Leader, Student/Athlete, IT Professional, Sales Professional — because the right skill depends entirely on what you actually do each day.</p>
+				</div>
+
+				<div class="step">
+					<span class="step-number">2</span>
+					<h3 class="step-title">Choose Your Level</h3>
+					<p class="step-desc">Foundations, Proficiency, or Expertise — based on where you actually are, not where you think you should be. Most people start in Foundations regardless of seniority. The habits you build there are what make the higher tiers work.</p>
+				</div>
+
+				<div class="step">
+					<span class="step-number">3</span>
+					<h3 class="step-title">Do One Thing</h3>
+					<p class="step-desc">Each module is 2–40 minutes. Complete one. Apply it. Come back for the next. The system is designed so that doing one thing is always enough — and never the last thing you want to do.</p>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- Quote -->
+		<div class="quote-section" role="region" aria-label="Key insight">
+			<p class="big-quote">The biggest barrier to AI adoption isn't complexity. It's the feeling that you have to understand everything before you can do anything.</p>
+			<p class="quote-source">The EITR Principle</p>
+		</div>
+
+		<!-- Role Cards -->
+		<section class="roles-section">
+			<h2>Start With Your Role</h2>
+			<p>Select a character to explore their playlist on the homepage.</p>
+			<div class="roles-grid">
+				<a href="index.html" class="role-card">
+					<div class="role-avatar-row">
+						<img class="role-mini-avatar" src="https://randomuser.me/api/portraits/men/45.jpg" alt="Gerald" />
+						<div>
+							<p class="role-card-name">Gerald</p>
+							<p class="role-card-role">IT Manager</p>
+						</div>
+					</div>
+					<p class="role-card-cta">Secure &amp; Scale IT with AI &#8594;</p>
+				</a>
+				<a href="index.html" class="role-card">
+					<div class="role-avatar-row">
+						<img class="role-mini-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Shae" />
+						<div>
+							<p class="role-card-name">Shae</p>
+							<p class="role-card-role">Business Leader</p>
+						</div>
+					</div>
+					<p class="role-card-cta">Lead Teams with AI Decisions &#8594;</p>
+				</a>
+				<a href="index.html" class="role-card">
+					<div class="role-avatar-row">
+						<img class="role-mini-avatar" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Keith" />
+						<div>
+							<p class="role-card-name">Keith</p>
+							<p class="role-card-role">Student / Athlete</p>
+						</div>
+					</div>
+					<p class="role-card-cta">Study Faster with AI &#8594;</p>
+				</a>
+				<a href="index.html" class="role-card">
+					<div class="role-avatar-row">
+						<img class="role-mini-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Izzy" />
+						<div>
+							<p class="role-card-name">Izzy</p>
+							<p class="role-card-role">IT Professional</p>
+						</div>
+					</div>
+					<p class="role-card-cta">Engineer Better Systems &#8594;</p>
+				</a>
+				<a href="index.html" class="role-card">
+					<div class="role-avatar-row">
+						<img class="role-mini-avatar" src="https://randomuser.me/api/portraits/men/67.jpg" alt="Glenn" />
+						<div>
+							<p class="role-card-name">Glenn</p>
+							<p class="role-card-role">Sales Professional</p>
+						</div>
+					</div>
+					<p class="role-card-cta">Sell Smarter with AI &#8594;</p>
+				</a>
+			</div>
+		</section>
+
+		<!-- Final CTA -->
+		<section class="cta-section">
+			<h2>Start With One Skill</h2>
+			<p>Pick your role, pick your level, do one thing. That's the whole system.</p>
+			<a href="index.html" class="cta-btn">Start With One Skill</a>
+		</section>
+	</main>
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Let's Talk About the Elephant</title>
 	<script>
@@ -16,21 +17,20 @@
 </head>
 <body>
 	<main class="page-shell">
-		<header class="top-nav">
+		<header class="top-nav hero-nav">
 			<div class="menu-left">
-				<button class="menu-btn" type="button" aria-label="Open menu">|||</button>
+				<button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" onclick="var n=document.getElementById('main-nav');var open=n.classList.toggle('open');this.setAttribute('aria-expanded',open);">
+					<span></span><span></span><span></span>
+				</button>
 			</div>
-			<nav class="nav-links" aria-label="Main navigation">
-				<a href="#">All Episodes</a>
-				<a href="#">Who Is the Elephant</a>
-				<a href="#">Meet the Characters</a>
-				<a href="#">Learn More</a>
-				<a href="#">Microskilling</a>
+			<nav class="nav-links" id="main-nav" aria-label="Main navigation">
+				<a href="all-episodes.html">All Episodes</a>
+				<a href="who-is-the-elephant.html">Who Is the Elephant</a>
+				<a href="meet-the-characters.html">Meet the Characters</a>
+				<a href="learn-more.html">Learn More</a>
+				<a href="microskilling.html">Microskilling</a>
 			</nav>
-			<div class="menu-right">
-				<button class="arrow-btn" type="button" aria-label="Previous">&lt;</button>
-				<button class="arrow-btn" type="button" aria-label="Next">&gt;</button>
-			</div>
+			<div class="menu-right"></div>
 		</header>
 
 		<section class="hero">
@@ -46,7 +46,7 @@
 
 			<div class="hero-copy">
 				<p class="kicker">Let's talk about the</p>
-				<h1 class="display"><img class="display-logo" src="Images/Asset 1SS_306090.png" alt="Elephant In The Room" /></h1>
+				<h1 class="display"><a href="index.html"><img class="display-logo" src="Images/eitr-logo.png" alt="Elephant In The Room – Home" /></a></h1>
 				<p class="tagline">Five People. Five Careers. One Very Large Elephant.</p>
 				<p class="subline">See how they stopped fearing AI and started using it.</p>
 				<div class="socials" aria-label="Social media links">
@@ -60,28 +60,28 @@
 			<section class="characters">
 				<h2 class="section-title">Which One's You?</h2>
 				<div class="character-row">
-					<article class="character" data-persona="gerald" role="button" tabindex="0" aria-pressed="false">
-						<div class="avatar"><img class="avatar-photo" src="https://randomuser.me/api/portraits/men/45.jpg" alt="Gerald profile photo" /></div>
+					<article class="character active" data-persona="gerald" role="button" tabindex="0" aria-pressed="true">
+						<div class="avatar"><img class="avatar-photo" src="Images/persona-gerald.png" alt="Gerald profile photo" /></div>
 						<p class="character-name">Gerald</p>
 						<p class="character-role">IT Manager</p>
 					</article>
 					<article class="character" data-persona="shae" role="button" tabindex="0" aria-pressed="false">
-						<div class="avatar"><img class="avatar-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Shae profile photo" /></div>
+						<div class="avatar"><img class="avatar-photo" src="Images/persona-shae.png" alt="Shae profile photo" /></div>
 						<p class="character-name">Shae</p>
 						<p class="character-role">Business Leader</p>
 					</article>
 					<article class="character" data-persona="keith" role="button" tabindex="0" aria-pressed="false">
-						<div class="avatar"><img class="avatar-photo" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Keith profile photo" /></div>
+						<div class="avatar"><img class="avatar-photo" src="Images/persona-keith.png" alt="Keith profile photo" /></div>
 						<p class="character-name">Keith</p>
 						<p class="character-role">Student/Athlete</p>
 					</article>
 					<article class="character" data-persona="izzy" role="button" tabindex="0" aria-pressed="false">
-						<div class="avatar"><img class="avatar-photo" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Izzy profile photo" /></div>
+						<div class="avatar"><img class="avatar-photo" src="Images/persona-izzy.png" alt="Izzy profile photo" /></div>
 						<p class="character-name">Izzy</p>
 						<p class="character-role">IT Professional</p>
 					</article>
-					<article class="character active" data-persona="glenn" role="button" tabindex="0" aria-pressed="true">
-						<div class="avatar"><img class="avatar-photo" src="https://randomuser.me/api/portraits/men/67.jpg" alt="Glenn profile photo" /></div>
+					<article class="character" data-persona="glenn" role="button" tabindex="0" aria-pressed="false">
+						<div class="avatar"><img class="avatar-photo" src="Images/persona-glenn.png" alt="Glenn profile photo" /></div>
 						<p class="character-name">Glenn</p>
 						<p class="character-role">Sales Professional</p>
 					</article>
@@ -362,7 +362,7 @@
 				});
 			});
 
-			setActivePersona("glenn");
+			setActivePersona("gerald");
 		})();
 	</script>
 </body>
