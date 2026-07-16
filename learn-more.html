@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Learn More – Elephant In The Room</title>
+	<script>
+		(() => {
+			const param = new URLSearchParams(window.location.search).get("scoutTheme");
+			const theme = param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+			document.documentElement.setAttribute("data-theme", theme);
+		})();
+	</script>
+	<link rel="stylesheet" href="styles.css" />
+	<style>
+		/* ── Active nav indicator ── */
+		.nav-links a[aria-current="page"] {
+			color: color-mix(in srgb, var(--cp-warning) 90%, var(--cp-text) 10%);
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+
+/* nav colors handled by styles.css */
+
+		/* ── Home pill ── */
+		.home-link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 0.55rem;
+			height: 28px;
+			border-radius: 6px;
+			border: 1px solid rgba(255,255,255,0.22);
+			background: rgba(255,255,255,0.08);
+			color: rgba(242,247,251,0.82);
+			font-size: 0.62rem;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			text-decoration: none;
+			transition: background 150ms;
+		}
+		.home-link:hover { background: rgba(255,255,255,0.16); }
+
+		/* ── CTA button ── */
+		.cta-btn {
+			display: inline-block;
+			padding: 0.7rem 1.6rem;
+			background: var(--cp-accent);
+			color: #fff;
+			border-radius: 8px;
+			font-size: 0.95rem;
+			font-weight: 600;
+			text-decoration: none;
+			transition: background 180ms;
+		}
+		.cta-btn:hover { background: var(--cp-accent-hover); }
+
+		/* ── Page hero ── */
+		.page-hero {
+			background: linear-gradient(165deg, var(--cp-ocean-soft) 0%, var(--cp-ocean-mid) 55%, var(--cp-ocean-deep) 100%);
+			padding: 6rem 2.4rem 3.8rem;
+			text-align: center;
+		}
+		.hero-kicker {
+			font-size: 0.82rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: color-mix(in srgb, var(--cp-warning) 78%, transparent 22%);
+			margin: 0 0 0.65rem;
+		}
+		.page-heading {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(3rem, 8vw, 5.8rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 1rem;
+			line-height: 0.92;
+		}
+		.hero-subline {
+			font-size: 1.25rem;
+			font-style: italic;
+			color: var(--cp-ocean-text);
+			margin: 0;
+			opacity: 0.88;
+		}
+
+		/* ── Navigator intro section ── */
+		.ocean-section {
+			background: linear-gradient(180deg, var(--cp-ocean-deep) 0%, var(--cp-ocean-mid) 100%);
+			padding: 3.2rem 2.4rem 3.6rem;
+		}
+		.ocean-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(1.8rem, 4vw, 2.8rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 1.4rem;
+		}
+		.ocean-section p {
+			color: color-mix(in srgb, var(--cp-ocean-text) 88%, transparent 12%);
+			font-size: 1.05rem;
+			line-height: 1.72;
+			margin: 0 0 1.1rem;
+			max-width: 72ch;
+		}
+		.ocean-section p:last-child { margin-bottom: 0; }
+
+		/* ── Three Tiers section ── */
+		.tiers-section {
+			background: linear-gradient(180deg, var(--cp-ocean-mid) 0%, var(--cp-ocean-deep) 100%);
+			padding: 3rem 2.4rem 3.6rem;
+		}
+		.tiers-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(1.8rem, 4vw, 2.8rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 1.6rem;
+		}
+		.tiers-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.2rem;
+		}
+		.tier-card {
+			background: rgba(255,255,255,0.07);
+			border: 1px solid rgba(255,255,255,0.14);
+			border-radius: 14px;
+			padding: 1.6rem 1.5rem 1.8rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.7rem;
+			position: relative;
+			overflow: hidden;
+		}
+		.tier-card::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 3px;
+		}
+		.tier-card:nth-child(1)::before { background: linear-gradient(90deg, #0e7a8a, #1a8050); }
+		.tier-card:nth-child(2)::before { background: linear-gradient(90deg, #2448c8, #7a2d94); }
+		.tier-card:nth-child(3)::before { background: linear-gradient(90deg, #c45c0a, var(--cp-accent)); }
+		.tier-number {
+			font-size: 0.7rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: color-mix(in srgb, var(--cp-warning) 65%, transparent 35%);
+		}
+		.tier-title {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: 1.6rem;
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			margin: 0;
+			line-height: 1;
+		}
+		.tier-desc {
+			font-size: 0.92rem;
+			color: color-mix(in srgb, var(--cp-ocean-text) 78%, transparent 22%);
+			line-height: 1.55;
+			margin: 0;
+			flex: 1;
+		}
+
+		/* ── Formats section ── */
+		.formats-section {
+			background: linear-gradient(180deg, var(--cp-bg-elevated) 0%, var(--cp-bg) 100%);
+			padding: 3rem 2.4rem 3.4rem;
+		}
+		.formats-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(1.8rem, 4vw, 2.6rem);
+			color: var(--cp-text);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 1.5rem;
+		}
+		.formats-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+			gap: 1rem;
+		}
+		.format-card {
+			background: var(--cp-surface);
+			border: 1px solid var(--cp-border);
+			border-radius: 12px;
+			padding: 1.4rem 1.2rem 1.3rem;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.6rem;
+			transition: box-shadow 180ms, transform 180ms;
+		}
+		.format-card:hover {
+			box-shadow: var(--cp-shadow);
+			transform: translateY(-2px);
+		}
+		.format-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.4rem;
+		}
+		.format-icon-blue   { background: color-mix(in srgb, #0078d4 14%, transparent 86%); }
+		.format-icon-red    { background: color-mix(in srgb, var(--cp-accent) 14%, transparent 86%); }
+		.format-icon-green  { background: color-mix(in srgb, #16a34a 14%, transparent 86%); }
+		.format-icon-purple { background: color-mix(in srgb, #7c3aed 14%, transparent 86%); }
+		.format-icon-amber  { background: color-mix(in srgb, var(--cp-warning) 18%, transparent 82%); }
+		.format-name {
+			font-size: 0.9rem;
+			font-weight: 600;
+			color: var(--cp-text);
+			margin: 0;
+		}
+		.format-tag {
+			font-size: 0.74rem;
+			color: var(--cp-text-muted);
+			border: 1px solid var(--cp-border);
+			border-radius: 999px;
+			padding: 0.15rem 0.55rem;
+		}
+
+		/* ── CTA section ── */
+		.cta-section {
+			background: linear-gradient(170deg, var(--cp-ocean-mid) 0%, var(--cp-ocean-deep) 100%);
+			padding: 3.4rem 2.4rem 3.8rem;
+			text-align: center;
+		}
+		.cta-section h2 {
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: clamp(2rem, 5vw, 3.2rem);
+			color: color-mix(in srgb, var(--cp-warning) 80%, var(--cp-text) 20%);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin: 0 0 0.9rem;
+		}
+		.cta-section p {
+			color: color-mix(in srgb, var(--cp-ocean-text) 82%, transparent 18%);
+			font-size: 1.05rem;
+			margin: 0 auto 2rem;
+			max-width: 50ch;
+			line-height: 1.6;
+		}
+
+		@media (max-width: 760px) {
+			.tiers-grid { grid-template-columns: 1fr; }
+			.page-hero { padding: 5rem 1.2rem 2.4rem; }
+			.ocean-section,
+			.tiers-section,
+			.formats-section,
+			.cta-section { padding: 2.4rem 1.2rem 2.8rem; }
+		}
+	</style>
+</head>
+<body>
+	<main class="page-shell">
+		<header class="top-nav">
+			<div class="menu-left">
+				<a href="index.html" class="home-link" aria-label="Home – Elephant In The Room">Home</a>
+				<button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" onclick="var n=document.getElementById('main-nav');var open=n.classList.toggle('open');this.setAttribute('aria-expanded',open);"><span></span><span></span><span></span></button>
+			</div>
+			<nav class="nav-links" id="main-nav" aria-label="Main navigation">
+				<a href="all-episodes.html">All Episodes</a>
+				<a href="who-is-the-elephant.html">Who Is the Elephant</a>
+				<a href="meet-the-characters.html">Meet the Characters</a>
+				<a href="learn-more.html" aria-current="page">Learn More</a>
+				<a href="microskilling.html">Microskilling</a>
+			</nav>
+			<div class="menu-right">
+				<button class="arrow-btn" type="button" aria-label="Previous" onclick="location.href='meet-the-characters.html'">&lt;</button>
+				<button class="arrow-btn" type="button" aria-label="Next" onclick="location.href='microskilling.html'">&gt;</button>
+			</div>
+		</header>
+
+		<!-- Hero -->
+		<section class="page-hero">
+			<p class="hero-kicker">Skills you can actually use.</p>
+			<h1 class="page-heading">Learn More</h1>
+			<p class="hero-subline">Every episode is mapped to a real learning path.</p>
+		</section>
+
+		<!-- Navigator intro -->
+		<section class="ocean-section">
+			<h2>What Is the AI Skills Navigator?</h2>
+			<p>The AI Skills Navigator is a role-based learning system built to move people from AI avoidance to AI fluency — in the flow of real work. Rather than generic AI literacy courses, the Navigator maps specific skills to specific roles: what an IT manager needs is different from what a sales professional, student, or business leader needs.</p>
+			<p>Each character in <em>Elephant In The Room</em> follows a real Navigator path — Foundations, Proficiency, and Expertise. The content you see in the show is the content you can learn from yourself. No prerequisites. No certification track required. Just the next skill that moves you forward in the role you already have.</p>
+		</section>
+
+		<!-- Three Tiers -->
+		<section class="tiers-section">
+			<h2>Three Tiers. One Path Forward.</h2>
+			<div class="tiers-grid">
+				<div class="tier-card">
+					<span class="tier-number">Tier 1</span>
+					<h3 class="tier-title">Role Foundations</h3>
+					<p class="tier-desc">Build practical habits specific to your role. Start seeing results in your first week. No theory — just the skills that apply to your actual work, today.</p>
+				</div>
+				<div class="tier-card">
+					<span class="tier-number">Tier 2</span>
+					<h3 class="tier-title">Role Proficiency</h3>
+					<p class="tier-desc">Move from one-off prompts to repeatable workflows. AI becomes part of how you work, not an extra task on top of it. This is where habits become systems.</p>
+				</div>
+				<div class="tier-card">
+					<span class="tier-number">Tier 3</span>
+					<h3 class="tier-title">Role Expertise</h3>
+					<p class="tier-desc">Lead, govern, and scale AI adoption. Become the person your team looks to — not because you took a course, but because you've done the work at every tier.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Formats section -->
+		<section class="formats-section">
+			<h2>How You'll Learn</h2>
+			<div class="formats-grid">
+				<div class="format-card">
+					<div class="format-icon format-icon-blue">&#128736;</div>
+					<p class="format-name">Applied Skills</p>
+					<span class="format-tag">Hands-on</span>
+				</div>
+				<div class="format-card">
+					<div class="format-icon format-icon-red">&#9654;</div>
+					<p class="format-name">YouTube Videos</p>
+					<span class="format-tag">Quick wins</span>
+				</div>
+				<div class="format-card">
+					<div class="format-icon format-icon-green">&#128218;</div>
+					<p class="format-name">Learning Paths</p>
+					<span class="format-tag">Deep dive</span>
+				</div>
+				<div class="format-card">
+					<div class="format-icon format-icon-purple">&#127891;</div>
+					<p class="format-name">LinkedIn Learning</p>
+					<span class="format-tag">Professional</span>
+				</div>
+				<div class="format-card">
+					<div class="format-icon format-icon-amber">&#128295;</div>
+					<p class="format-name">Interactive Exercises</p>
+					<span class="format-tag">Applied</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="cta-section">
+			<h2>Find Your Path</h2>
+			<p>Select your role on the homepage and explore the full AI Skills Navigator playlist built for you.</p>
+			<a href="index.html" class="cta-btn">Find Your Path</a>
+		</section>
+	</main>
+</body>
+</html>
