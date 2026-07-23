@@ -1114,7 +1114,7 @@ a.card:focus-visible {
   color: #c8c8c8;
   font-family: "Segoe UI", system-ui, sans-serif;
   font-size: 0.72rem;
-  padding: 1rem 3rem;
+  padding: 1rem 4rem;
   margin-top: 4rem;
   border-top: 1px solid #303030;
 }
